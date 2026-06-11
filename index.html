@@ -29,7 +29,7 @@ body{
   <p>GitHub Pages funcionando com sucesso.</p>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
- <script>
+<script>
 async function testeSupabase() {
   const SUPABASE_URL = "https://kpjtjkzmnqvnefmjpcnq.supabase.co";
   const SUPABASE_KEY = "sb_publishable_W1VUYzn8GfWj9TKUEHyyTg_DlEg3evm";
@@ -41,12 +41,13 @@ async function testeSupabase() {
     .from("configuracoes")
     .select("*");
 
+  console.log("DATA:", data);
+  console.log("ERROR:", error);
+
   if (error) {
-    alert("Erro ao conectar");
-    console.log(error);
+    alert(error.message);
   } else {
-    alert("Conectado ao banco!");
-    console.log(data);
+    alert("Conectado!");
   }
 }
 
