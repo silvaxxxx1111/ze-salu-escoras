@@ -99,18 +99,39 @@ async function salvarLocacao() {
   let html = "";
 
   data.forEach(locacao => {
-    html += `
-      <div style="border:1px solid #ccc;padding:10px;margin:10px 0;">
-        <strong>${locacao.cliente}</strong><br>
-        Telefone: ${locacao.telefone}<br>
-        Escoras: ${locacao.escoras}<br>
-        Andaimes: ${locacao.andaimes}<br>
-        Observação: ${locacao.observacao || ""}
-      </div>
-    `;
+   html += `
+  <div style="border:1px solid #ccc;padding:10px;margin:10px 0;">
+    <strong>${locacao.cliente}</strong><br>
+    Telefone: ${locacao.telefone}<br>
+    Escoras: ${locacao.escoras}<br>
+    Andaimes: ${locacao.andaimes}<br>
+    Observação: ${locacao.observacao || ""}<br>
+    Status: ${locacao.status || "ativa"}<br><br>
+
+    <button onclick="devolverLocacao(${locacao.id})">
+      Devolver
+    </button>
+  </div>
+`;
   });
 
   document.getElementById("listaLocacoes").innerHTML = html;
+}
+    async function devolverLocacao(id) {
+
+  const { error } = await client
+    .from("locacoes")
+    .update({
+      status: "devolvida"
+    })
+    .eq("id", id);
+
+  if (error) {
+    alert(error.message);
+  } else {
+    alert("Locação devolvida!");
+    carregarLocacoes();
+  }
 }
     window.onload = carregarLocacoes;
 </script>
