@@ -104,6 +104,11 @@ async function salvarLocacao() {
     console.log(error);
     return;
   }
+      const { data: config } = await client
+  .from("configuracoes")
+  .select("*")
+  .eq("id", 1)
+  .single();
 
   let html = "";
 
@@ -118,11 +123,7 @@ const diasLocados = Math.max(
   1,
   Math.ceil((dataFinal - dataInicio) / (1000 * 60 * 60 * 24))
 );
-const { data: config } = await client
-  .from("configuracoes")
-  .select("*")
-  .eq("id", 1)
-  .single();
+
 
 const valorEscora = Number(config.valor_escora);
 const valorAndaime = Number(config.valor_andaime);
