@@ -29,9 +29,25 @@ body{
   <p>GitHub Pages funcionando com sucesso.</p>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
+ <script>
 async function testeSupabase() {
-  alert("Teste iniciado");
+  const SUPABASE_URL = "https://kpjtjkzmnqvnefmjpcnq.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_W1VUYzn8GfWj9TKUEHyyTg_DlEg3evm";
+
+  const { createClient } = supabase;
+  const client = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const { data, error } = await client
+    .from("configuracoes")
+    .select("*");
+
+  if (error) {
+    alert("Erro ao conectar");
+    console.log(error);
+  } else {
+    alert("Conectado ao banco!");
+    console.log(data);
+  }
 }
 
 window.onload = testeSupabase;
