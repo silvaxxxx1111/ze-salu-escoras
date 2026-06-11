@@ -119,6 +119,8 @@ const valorTotal = valorDia * diasLocados;
     Escoras: ${locacao.escoras}<br>
     Andaimes: ${locacao.andaimes}<br>
     Observação: ${locacao.observacao || ""}<br>
+    Data início: ${new Date(locacao.data_inicio).toLocaleDateString('pt-BR')}<br>
+Data devolução: ${locacao.data_fim ? new Date(locacao.data_fim).toLocaleDateString('pt-BR') : "-"}<br>
     Status: ${locacao.status || "ativa"}<br><br>
     Dias locados: ${diasLocados}<br>
 Valor por dia: R$ ${valorDia.toFixed(2)}<br>
@@ -140,8 +142,9 @@ Total acumulado: R$ ${valorTotal.toFixed(2)}<br><br>
   const { error } = await client
     .from("locacoes")
     .update({
-      status: "devolvida"
-    })
+  status: "devolvida",
+  data_fim: new Date().toISOString()
+})
     .eq("id", id);
 
   if (error) {
