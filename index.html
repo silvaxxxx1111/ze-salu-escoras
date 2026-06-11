@@ -84,6 +84,34 @@ async function salvarLocacao() {
     
   }
 }
+    async function carregarLocacoes() {
+
+  const { data, error } = await client
+    .from("locacoes")
+    .select("*")
+    .order("id", { ascending: false });
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  let html = "";
+
+  data.forEach(locacao => {
+    html += `
+      <div style="border:1px solid #ccc;padding:10px;margin:10px 0;">
+        <strong>${locacao.cliente}</strong><br>
+        Telefone: ${locacao.telefone}<br>
+        Escoras: ${locacao.escoras}<br>
+        Andaimes: ${locacao.andaimes}<br>
+        Observação: ${locacao.observacao || ""}
+      </div>
+    `;
+  });
+
+  document.getElementById("listaLocacoes").innerHTML = html;
+}
     window.onload = carregarLocacoes;
 </script>
 </body>
