@@ -47,6 +47,15 @@ body{
 <h3>Locações Cadastradas</h3>
 
 <div id="listaLocacoes"></div>
+  <h3>Configurações</h3>
+
+<input id="valorEscora" type="number" step="0.01" placeholder="Valor da escora">
+
+<input id="valorAndaime" type="number" step="0.01" placeholder="Valor do andaime">
+
+<button onclick="salvarConfiguracoes()">
+  Salvar Configurações
+</button>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
@@ -155,6 +164,28 @@ Total acumulado: R$ ${valorTotal.toFixed(2)}<br><br>
   } else {
     alert("Locação devolvida!");
     carregarLocacoes();
+  }
+}
+    async function salvarConfiguracoes() {
+
+  const valorEscora =
+    Number(document.getElementById("valorEscora").value);
+
+  const valorAndaime =
+    Number(document.getElementById("valorAndaime").value);
+
+  const { error } = await client
+    .from("configuracoes")
+    .update({
+      valor_escora: valorEscora,
+      valor_andaime: valorAndaime
+    })
+    .eq("id", 1);
+
+  if (error) {
+    alert(error.message);
+  } else {
+    alert("Configurações salvas!");
   }
 }
     window.onload = carregarLocacoes;
