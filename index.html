@@ -182,11 +182,12 @@ Total acumulado: R$ ${valorTotal.toFixed(2)}<br><br>
     })
     .eq("id", 1);
 
-  if (error) {
-    alert(error.message);
-  } else {
-    alert("Configurações salvas!");
-  }
+ if (error) {
+  console.log(error);
+  alert(JSON.stringify(error));
+} else {
+  alert("Configurações salvas!");
+}
 }
     window.onload = carregarLocacoes;
 </script>
