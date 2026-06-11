@@ -45,7 +45,7 @@ async function testeSupabase() {
   console.log("ERROR:", error);
 
   if (error) {
-    alert(error.message);
+    alert(JSON.stringify(error));
   } else {
     alert("Conectado!");
   }
