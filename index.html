@@ -38,34 +38,44 @@ body{
 
   <textarea id="observacao" placeholder="Observação"></textarea>
 
-  <button>
-    Salvar Locação
-  </button>
+  <button onclick="salvarLocacao()">
+  Salvar Locação
+</button>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-async function testeSupabase() {
-  const SUPABASE_URL = "https://kpjtjkzmnqvnefmjpcnq.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_W1VUYzn8GfWj9TKUEHyyTg_DlEg3evm";
+  <script>
+const SUPABASE_URL = "https://kpjtjkzmnqvnefmjpcnq.supabase.co";
+const SUPABASE_KEY = "sb_publishable_W1VUYzn8GfWj9TKUEHyyTg_DlEg3evm";
 
-  const { createClient } = supabase;
-  const client = createClient(SUPABASE_URL, SUPABASE_KEY);
+const { createClient } = supabase;
+const client = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  const { data, error } = await client
-    .from("configuracoes")
-    .select("*");
+async function salvarLocacao() {
 
-  console.log("DATA:", data);
-  console.log("ERROR:", error);
+  const cliente = document.getElementById("cliente").value;
+  const telefone = document.getElementById("telefone").value;
+  const escoras = Number(document.getElementById("escoras").value || 0);
+  const andaimes = Number(document.getElementById("andaimes").value || 0);
+  const observacao = document.getElementById("observacao").value;
+
+  const { error } = await client
+    .from("locacoes")
+    .insert([
+      {
+        cliente,
+        telefone,
+        escoras,
+        andaimes,
+        observacao
+      }
+    ]);
 
   if (error) {
-    alert(JSON.stringify(error));
+    alert(error.message);
   } else {
-    alert("Conectado!");
+    alert("Locação salva com sucesso!");
   }
 }
-
-window.onload = testeSupabase;
 </script>
 </body>
 </html>
