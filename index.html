@@ -99,6 +99,19 @@ async function salvarLocacao() {
   let html = "";
 
   data.forEach(locacao => {
+    const dataInicio = new Date(locacao.data_inicio);
+const hoje = new Date();
+
+const diasLocados = Math.max(
+  1,
+  Math.ceil((hoje - dataInicio) / (1000 * 60 * 60 * 24))
+);
+
+const valorDia =
+  (locacao.escoras * 1.0) +
+  (locacao.andaimes * 5.0);
+
+const valorTotal = valorDia * diasLocados;
    html += `
   <div style="border:1px solid #ccc;padding:10px;margin:10px 0;">
     <strong>${locacao.cliente}</strong><br>
@@ -107,6 +120,9 @@ async function salvarLocacao() {
     Andaimes: ${locacao.andaimes}<br>
     Observação: ${locacao.observacao || ""}<br>
     Status: ${locacao.status || "ativa"}<br><br>
+    Dias locados: ${diasLocados}<br>
+Valor por dia: R$ ${valorDia.toFixed(2)}<br>
+Total acumulado: R$ ${valorTotal.toFixed(2)}<br><br>
 
     <button onclick="devolverLocacao(${locacao.id})">
       Devolver
