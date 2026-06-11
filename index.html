@@ -118,10 +118,17 @@ const diasLocados = Math.max(
   1,
   Math.ceil((dataFinal - dataInicio) / (1000 * 60 * 60 * 24))
 );
+const { data: config } = await client
+  .from("configuracoes")
+  .select("*")
+  .eq("id", 1)
+  .single();
 
+const valorEscora = Number(config.valor_escora);
+const valorAndaime = Number(config.valor_andaime);
 const valorDia =
-  (locacao.escoras * 1.0) +
-  (locacao.andaimes * 5.0);
+(locacao.escoras * valorEscora) +
+(locacao.andaimes * valorAndaime);
 
 const valorTotal = valorDia * diasLocados;
    html += `
