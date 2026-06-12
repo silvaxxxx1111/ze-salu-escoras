@@ -183,13 +183,19 @@ Total acumulado: R$ ${valorTotal.toFixed(2)}<br><br>
 
   const valorAndaime =
     Number(document.getElementById("valorAndaime").value);
+const estoqueEscoras =
+  Number(document.getElementById("estoqueEscoras").value);
 
+const estoqueAndaimes =
+  Number(document.getElementById("estoqueAndaimes").value);
   const { error } = await client
     .from("configuracoes")
     .update({
-      valor_escora: valorEscora,
-      valor_andaime: valorAndaime
-    })
+  estoque_escoras: estoqueEscoras,
+  estoque_andaimes: estoqueAndaimes,
+  valor_escora: valorEscora,
+  valor_andaime: valorAndaime
+})
     .eq("id", 1);
 
  if (error) {
